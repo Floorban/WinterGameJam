@@ -67,15 +67,17 @@ public class PlayerController : MonoBehaviour
         if (!isAwake) AddStrike();
     }
 
-    private float _strike;
+    private float _strike = 0;
     void AddStrike()
     {
         _strike += 1;
+        Debug.Log(_strike);
         if (_strike >= 3) GameOver();
     }
 
     void GameOver()
     {
+        Debug.Log("Game Over");
         Application.Quit();
     }
 }

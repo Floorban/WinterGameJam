@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class BossController : MonoBehaviour
 {
@@ -34,11 +35,13 @@ public class BossController : MonoBehaviour
         _audioSource.PlayOneShot(_footSteps, 0.7F);
         yield return new WaitForSeconds(_timeToWait);
         OpenDoor();
+        transform.position += new Vector3(10, 0, 0);
         _player.GetComponent<PlayerController>().CheckSleep();
         yield return new WaitForSeconds(2f);
         _player.GetComponent<PlayerController>().CheckSleep();
         CloseDoor();
         _timeBetweenAction = Random.Range(15f, 35f);
+
 
     }
     #region DoorHandling
@@ -46,11 +49,13 @@ public class BossController : MonoBehaviour
     void OpenDoor()
     {
         _door.transform.Rotate(90.0f, 0.0f, 0.0f);
+        transform.position += new Vector3(2, 0, 0);
     }
 
     void CloseDoor()
     {
         _door.transform.Rotate(0.0f, 0.0f, 0.0f);
+        transform.position += new Vector3(-2, 0, 0);
     }
     #endregion
 
