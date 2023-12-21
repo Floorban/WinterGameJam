@@ -1,12 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private bool isAwake, isCalling;
-  
+
     public GameObject sleepMask;
     public Image fatigueBar;
 
@@ -30,7 +32,7 @@ public class PlayerController : MonoBehaviour
             if (phoneState.canPickup)
             {
                 isCalling = !isCalling;
-            }else
+            } else
             {
                 isCalling = false;
             }
@@ -62,15 +64,18 @@ public class PlayerController : MonoBehaviour
         currentState -= 2f * Time.deltaTime;
     }
 
-    public void CheckSleep() 
+    #region Striking
+    public void CheckSleep()
     {
         if (!isAwake) AddStrike();
     }
 
     private float _strike = 0;
+    [SerializeField] private Text _strikeText;
     void AddStrike()
     {
         _strike += 1;
+        _strikeText.text = "Strikes: " + _strike;
         Debug.Log(_strike);
         if (_strike >= 3) GameOver();
     }
@@ -80,4 +85,5 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Game Over");
         Application.Quit();
     }
+    #endregion
 }
