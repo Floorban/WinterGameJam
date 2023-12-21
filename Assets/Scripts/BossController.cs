@@ -9,9 +9,11 @@ public class BossController : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
 
     private float _timeBetweenAction;
+
+ 
     // Start is called before the first frame update
     void Start()
-    {
+    {;
         _timeBetweenAction = Random.Range(15f, 35f);
     }
 
@@ -24,19 +26,32 @@ public class BossController : MonoBehaviour
             StartCoroutine(BossAction());
         }
     }
-
+    
+    [SerializeField] private GameObject _player;
     IEnumerator BossAction()
     {
         float _timeToWait = Random.Range(0.5f, 4.0f);
         _audioSource.PlayOneShot(_footSteps, 0.7F);
         yield return new WaitForSeconds(_timeToWait);
         OpenDoor();
+        _player.GetComponent<PlayerController>().CheckSleep();
+        yield return new WaitForSeconds(2f);
+        _player.GetComponent<PlayerController>().CheckSleep();
+        CloseDoor();
         _timeBetweenAction = Random.Range(15f, 35f);
-    }
 
+    }
+    #region DoorHandling
     [SerializeField] private GameObject _door;
     void OpenDoor()
     {
         _door.transform.Rotate(90.0f, 0.0f, 0.0f);
     }
+
+    void CloseDoor()
+    {
+        _door.transform.Rotate(0.0f, 0.0f, 0.0f);
+    }
+    #endregion
+
 }

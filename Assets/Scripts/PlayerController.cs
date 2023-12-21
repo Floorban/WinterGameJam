@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,5 +60,22 @@ public class PlayerController : MonoBehaviour
     void DecreaseFatigueBar()
     {
         currentState -= 2f * Time.deltaTime;
+    }
+
+    public void CheckSleep() 
+    {
+        if (!isAwake) AddStrike();
+    }
+
+    private float _strike;
+    void AddStrike()
+    {
+        _strike += 1;
+        if (_strike >= 3) GameOver();
+    }
+
+    void GameOver()
+    {
+        Application.Quit();
     }
 }
