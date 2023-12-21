@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PhoneState : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject textBox;
+    public bool canPickup;
+    [SerializeField]
+    private float callTime, waitTime;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         

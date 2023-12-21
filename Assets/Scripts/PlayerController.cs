@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private float currentState;
+
+    public PhoneState phoneState;
     void Start()
     {
         fatigueBar.fillAmount = 50f;
@@ -24,7 +26,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && isAwake)
         {
-            isCalling = !isCalling;
+            if (phoneState.canPickup)
+            {
+                isCalling = !isCalling;
+            }
         }
 
         FillFatigueBar();
