@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
             if (phoneState.canPickup)
             {
                 isCalling = !isCalling;
+            }else
+            {
+                isCalling = false;
             }
         }
 
