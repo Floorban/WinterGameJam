@@ -17,6 +17,8 @@ public class PhoneState : MonoBehaviour
     public UnityEvent GiveStrike;
 
     [SerializeField] private GameObject _bossBubble;
+
+    public GameObject user;
     void Start()
     {
         waitTime = Random.Range(2f, 10f);
@@ -71,7 +73,8 @@ public class PhoneState : MonoBehaviour
     void OpenTextPanel()
     {
         animator.SetBool("hasCall", false);
-        Debug.Log("choose file");
+        Instantiate(user);
+        
     }
 
     IEnumerator BossBubble()
