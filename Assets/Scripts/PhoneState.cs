@@ -5,8 +5,9 @@ public class PhoneState : MonoBehaviour
 {
     public GameObject textBox;
     public bool canPickup;
+    public bool canCall;
     [SerializeField]
-    private float waitTime;
+    private float waitTime, waitForPickup;
     private Animator animator;
     [SerializeField] private AudioClip _ringSound;
     [SerializeField] private AudioSource _audioSource;
@@ -17,6 +18,7 @@ public class PhoneState : MonoBehaviour
     {
         waitTime = Random.Range(2f, 10f);
         animator = GetComponent<Animator>();
+        canCall = true;
     }
 
     void Update()
@@ -24,27 +26,41 @@ public class PhoneState : MonoBehaviour
         waitTime -= Time.deltaTime;
         if (waitTime <= 0)
         {
-            PhoneRing();
+            if (canCall)
+            {
+                PhoneRing();
+            }
         }
     }
     void PhoneRing()
     {
+        WaitPickUp();
         //_audioSource.Play();
         canPickup = true;
         animator.SetBool("hasCall", true);
 
-        float waitForPickup = 4f;
-        waitForPickup -= Time.deltaTime;
-
         if (player.isCalling)
         {
             OpenTextPanel();
+            canPickup = false;
+            canCall = false;
         }
 
+    }
+    void WaitPickUp()
+    {
+        if (canPickup)
+        {
+            waitForPickup = Random.Range(3f, 5f);
+            waitForPickup -= Time.deltaTime;
+        }
         if (waitForPickup <= 0 && !player.isCalling)
         {
             GiveStrike.Invoke();
+            animator.SetBool("hasCall", false);
             waitTime = Random.Range(2f, 10f);
+            canPickup = false;
+            canCall = true;
         }
     }
     void OpenTextPanel()
