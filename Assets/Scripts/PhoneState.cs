@@ -34,22 +34,24 @@ public class PhoneState : MonoBehaviour
         {
             if (canCall)
             {
+                canPickup = true;
                 PhoneRing();
             }
         }
     }
     void PhoneRing()
     {
-        WaitPickUp();
+       
         //_audioSource.Play();
-        canPickup = true;
+    
         animator.SetBool("hasCall", true);
+        WaitPickUp();
 
         if (player.isCalling)
         {
-            OpenTextPanel();
             canPickup = false;
-            canCall = false;
+            animator.SetBool("hasCall", false);
+            waitTime = Random.Range(2f, 10f);
         }
 
     }
@@ -57,25 +59,22 @@ public class PhoneState : MonoBehaviour
     {
         if (canPickup)
         {
+ 
             waitForPickup = Random.Range(3f, 5f);
-            waitForPickup -= Time.deltaTime;
+       
         }
+        waitForPickup -= Time.deltaTime;
         if (waitForPickup <= 0 && !player.isCalling)
         {
             StartCoroutine(BossBubble());
             GiveStrike.Invoke();
             animator.SetBool("hasCall", false);
             waitTime = Random.Range(2f, 10f);
-            canPickup = false;
+            
             canCall = true;
         }
     }
-    void OpenTextPanel()
-    {
-        animator.SetBool("hasCall", false);
-        Instantiate(user);
-        
-    }
+
 
     IEnumerator BossBubble()
     {
