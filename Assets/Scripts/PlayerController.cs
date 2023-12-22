@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private bool isAwake, isCalling;
+    public bool isAwake, isCalling;
 
     public Image fatigueBar;
 
@@ -19,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public Volume volume;
     public WhiteBalance wb;
     public ColorAdjustments ca;
+
     void Start()
     {
         fatigueBar.fillAmount = 50f;
@@ -71,26 +71,4 @@ public class PlayerController : MonoBehaviour
         currentState -= 2f * Time.deltaTime;
     }
 
-    #region Striking
-    public void CheckSleep()
-    {
-        if (!isAwake) AddStrike();
-    }
-
-    private float _strike = 0;
-    [SerializeField] private TextMeshProUGUI _strikeText;
-    void AddStrike()
-    {
-        _strike += 1;
-        _strikeText.text = "Strikes: " + _strike;
-        Debug.Log(_strike);
-        if (_strike >= 3) GameOver();
-    }
-
-    void GameOver()
-    {
-        Debug.Log("Game Over");
-        Application.Quit();
-    }
-    #endregion
 }

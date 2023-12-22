@@ -1,22 +1,20 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.Events;
 
 public class BossController : MonoBehaviour
 {
-
     [SerializeField] private AudioClip _footSteps;
     [SerializeField] private AudioSource _audioSource;
 
     private float _timeBetweenAction;
-
- 
-    // Start is called before the first frame update
+    [SerializeField] private PlayerController _player;
+    public UnityEvent GiveStrike;
     void Start()
     {
-        _timeBetweenAction = Random.Range(15f, 35f);
+        _timeBetweenAction = Random.Range(3f, 5f);
         Debug.Log(_timeBetweenAction);
+        _player = GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -29,20 +27,19 @@ public class BossController : MonoBehaviour
             StartCoroutine(BossAction());
         }
     }
-    
-    [SerializeField] private GameObject _player;
+   
     IEnumerator BossAction()
     {       
         Debug.Log("Coroutine");
         float _timeToWait = Random.Range(0.5f, 4.0f);
-        _timeBetweenAction = Random.Range(15f, 35f) + _timeToWait + 2f;
+        _timeBetweenAction = Random.Range(3f, 5f) + _timeToWait + 2f;
         _audioSource.PlayOneShot(_footSteps, 0.7F);
         yield return new WaitForSeconds(_timeToWait);
         OpenDoor();
-        //_player.GetComponent<PlayerController>().CheckSleep();
+        if (!_player.isAwake) GiveStrike.Invoke();
         yield return new WaitForSeconds(3f);
         Debug.Log("wait");
-        //_player.GetComponent<PlayerController>().CheckSleep();
+        if (!_player.isAwake) GiveStrike.Invoke();
         CloseDoor();      
     }
     #region DoorHandling
