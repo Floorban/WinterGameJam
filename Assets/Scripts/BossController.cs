@@ -58,7 +58,9 @@ public class BossController : MonoBehaviour
     void CloseDoor()
     {
         _isSleepChecking = false;
-        _strike._canStrike = true;
+        _strike.canStrike = true;
+        _strike.angryBoss.SetActive(false);
+        _strike.Boss.SetActive(true);
         _door.transform.Rotate(0.0f, 90.0f, 0.0f);
         transform.position += new Vector3(-3, 0, 0);
     }
