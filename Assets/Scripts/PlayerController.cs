@@ -19,11 +19,15 @@ public class PlayerController : MonoBehaviour
     public WhiteBalance wb;
     public ColorAdjustments ca;
 
+    [SerializeField] private GameObject _playerAwake;
+    [SerializeField] private GameObject _playerAsleep;
+
     void Start()
     {
         fatigueBar.fillAmount = 50f;
         volume.profile.TryGet(out wb);
         volume.profile.TryGet(out ca);
+        _playerAwake.SetActive(false);
     }
     void Update()
     {
@@ -47,12 +51,16 @@ public class PlayerController : MonoBehaviour
 
         if (isAwake)
         {
+            _playerAwake.SetActive(true);
+            _playerAsleep.SetActive(false);
             DecreaseFatigueBar();
             wb.temperature.value = 50f;
             ca.colorFilter.value = new Color(1f, 1f, 1f, 1f);
         }
         else
         {
+            _playerAwake.SetActive(false);
+            _playerAsleep.SetActive(true);
             IncreaseFatigueBar();
             wb.temperature.value = -100f;
             ca.colorFilter.value = new Color(0.4f, 0.4f, 0.4f, 0.4f);
