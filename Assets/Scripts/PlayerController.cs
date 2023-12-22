@@ -1,15 +1,12 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private bool isAwake, isCalling;
 
-    public GameObject sleepMask;
     public Image fatigueBar;
 
     [SerializeField]
@@ -43,17 +40,17 @@ public class PlayerController : MonoBehaviour
         if (isAwake)
         {
             IncreaseFatigueBar();
-            sleepMask.SetActive(true);
+          
         }
         else
         {
             DecreaseFatigueBar();
-            sleepMask.SetActive(false);
+     
         }
     }
     void FillFatigueBar()
     {
-        fatigueBar.fillAmount = currentState / 100;
+        fatigueBar.fillAmount = currentState / 100f;
     }
     void IncreaseFatigueBar()
     {
@@ -71,7 +68,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private float _strike = 0;
-    [SerializeField] private Text _strikeText;
+    [SerializeField] private TextMeshProUGUI _strikeText;
     void AddStrike()
     {
         _strike += 1;
