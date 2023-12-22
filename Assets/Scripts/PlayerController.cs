@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,9 +15,15 @@ public class PlayerController : MonoBehaviour
     private float currentState;
 
     public PhoneState phoneState;
+
+    public Volume volume;
+    public WhiteBalance wb;
+    public ColorAdjustments ca;
     void Start()
     {
         fatigueBar.fillAmount = 50f;
+        volume.profile.TryGet(out wb);
+        volume.profile.TryGet(out ca);
     }
     void Update()
     {
@@ -40,12 +48,14 @@ public class PlayerController : MonoBehaviour
         if (isAwake)
         {
             IncreaseFatigueBar();
-          
+            wb.temperature.value = 50f;
+            ca.colorFilter.value = new Color(1f, 1f, 1f, 1f);
         }
         else
         {
             DecreaseFatigueBar();
-     
+            wb.temperature.value = -100f;
+            ca.colorFilter.value = new Color(0.4f, 0.4f, 0.4f, 0.4f);
         }
     }
     void FillFatigueBar()
