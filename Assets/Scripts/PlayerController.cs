@@ -22,8 +22,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject _playerAwake;
     [SerializeField] private GameObject _playerAsleep;
 
+    [SerializeField] private GameObject _theEnd;
+    [SerializeField] private GameObject _door;
+
+    [SerializeField] private GameObject _theBoss;
+
     void Start()
     {
+        _theEnd.SetActive(false);
         fatigueBar.fillAmount = 50f;
         volume.profile.TryGet(out wb);
         volume.profile.TryGet(out ca);
@@ -65,7 +71,24 @@ public class PlayerController : MonoBehaviour
             wb.temperature.value = -100f;
             ca.colorFilter.value = new Color(0.4f, 0.4f, 0.4f, 0.4f);
         }
+
+        if (fatigueBar.fillAmount <= 0)
+        {
+            gameObject.SetActive(false);
+            
+            OpenDoor();
+        }
+
+
     }
+
+    void OpenDoor()
+    {
+        _door.transform.Rotate(0.0f, -90.0f, 0.0f);
+        _theBoss.SetActive(false);
+        _theEnd.SetActive(true);
+    }
+
     void FillFatigueBar()
     {
         fatigueBar.fillAmount = currentState / 100f;
