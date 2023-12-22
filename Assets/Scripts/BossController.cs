@@ -25,8 +25,15 @@ public class BossController : MonoBehaviour
             Debug.Log("time hit 0");
             StartCoroutine(BossAction());
         }
+        
+        if (_isSleepChecking)
+        { 
+            if (!_player.isAwake) GiveStrike.Invoke();        
+        }
     }
-   
+
+    private bool _isSleepChecking;
+    [SerializeField] private StrikeCount _strike;
     IEnumerator BossAction()
     {       
         Debug.Log("Coroutine");
@@ -34,23 +41,24 @@ public class BossController : MonoBehaviour
         _timeBetweenAction = Random.Range(3f, 5f) + _timeToWait + 2f;
         _audioSource.PlayOneShot(_footSteps, 0.7F);
         yield return new WaitForSeconds(_timeToWait);
-        OpenDoor();
-        if (!_player.isAwake) GiveStrike.Invoke();
+        OpenDoor();        
         yield return new WaitForSeconds(3f);
         Debug.Log("wait");
-        if (_player.isAwake) GiveStrike.Invoke();
         CloseDoor();      
     }
     #region DoorHandling
     [SerializeField] private GameObject _door;
     void OpenDoor()
     {
+        _isSleepChecking = true;
         _door.transform.Rotate(0.0f, -90.0f, 0.0f);
         transform.position += new Vector3(3, 0, 0);
     }
 
     void CloseDoor()
     {
+        _isSleepChecking = false;
+        _strike._canStrike = true;
         _door.transform.Rotate(0.0f, 90.0f, 0.0f);
         transform.position += new Vector3(-3, 0, 0);
     }
