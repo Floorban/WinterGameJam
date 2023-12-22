@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class PhoneState : MonoBehaviour
 {
@@ -14,11 +15,14 @@ public class PhoneState : MonoBehaviour
 
     public PlayerController player;
     public UnityEvent GiveStrike;
+
+    [SerializeField] private GameObject _bossBubble;
     void Start()
     {
         waitTime = Random.Range(2f, 10f);
         animator = GetComponent<Animator>();
         canCall = true;
+        _bossBubble.SetActive(false);
     }
 
     void Update()
@@ -56,6 +60,7 @@ public class PhoneState : MonoBehaviour
         }
         if (waitForPickup <= 0 && !player.isCalling)
         {
+            StartCoroutine(BossBubble());
             GiveStrike.Invoke();
             animator.SetBool("hasCall", false);
             waitTime = Random.Range(2f, 10f);
@@ -67,5 +72,12 @@ public class PhoneState : MonoBehaviour
     {
         animator.SetBool("hasCall", false);
         Debug.Log("choose file");
+    }
+
+    IEnumerator BossBubble()
+    {
+        _bossBubble.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        _bossBubble.SetActive(false);
     }
 }
