@@ -14,7 +14,6 @@ public class BossController : MonoBehaviour
     {
         _timeBetweenAction = Random.Range(3f, 5f);
         Debug.Log(_timeBetweenAction);
-        _player = GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -39,7 +38,7 @@ public class BossController : MonoBehaviour
         if (!_player.isAwake) GiveStrike.Invoke();
         yield return new WaitForSeconds(3f);
         Debug.Log("wait");
-        if (!_player.isAwake) GiveStrike.Invoke();
+        if (_player.isAwake) GiveStrike.Invoke();
         CloseDoor();      
     }
     #region DoorHandling
