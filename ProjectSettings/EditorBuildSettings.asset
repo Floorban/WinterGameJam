@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Niklas.unity
     guid: c661a17087f620f42914759c6577b2d6
+  - enabled: 1
+    path: Assets/Scenes/Lose.unity
+    guid: e0f33885b33350b4c84325a8cbb30afa
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02

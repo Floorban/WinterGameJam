@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class StrikeCount : MonoBehaviour
 {
@@ -25,11 +26,11 @@ public class StrikeCount : MonoBehaviour
 
     }
     public void AddStrike()
-    {
-        angryBoss.SetActive(true);
-        Boss.SetActive(false);
+    {       
         if (canStrike) 
         {
+            angryBoss.SetActive(true);
+            Boss.SetActive(false);
             canStrike = false;
             _player.isAwake = true;
             _strike += 1;
@@ -55,7 +56,7 @@ public class StrikeCount : MonoBehaviour
 
     void GameOver()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         Debug.Log("Game Over");
-        Application.Quit();
     }
 }

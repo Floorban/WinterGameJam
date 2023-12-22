@@ -14,6 +14,7 @@ public class BossController : MonoBehaviour
     {
         _timeBetweenAction = Random.Range(3f, 5f);
         Debug.Log(_timeBetweenAction);
+        _strike.angryBoss.SetActive(false);
     }
 
     // Update is called once per frame
@@ -50,9 +51,10 @@ public class BossController : MonoBehaviour
     [SerializeField] private GameObject _door;
     void OpenDoor()
     {
+        _strike.angryBoss.SetActive(false);
         _isSleepChecking = true;
         _door.transform.Rotate(0.0f, -90.0f, 0.0f);
-        transform.position += new Vector3(3, 0, 0);
+        transform.position += new Vector3(5, 0, 0);
     }
 
     void CloseDoor()
@@ -62,7 +64,7 @@ public class BossController : MonoBehaviour
         _strike.angryBoss.SetActive(false);
         _strike.Boss.SetActive(true);
         _door.transform.Rotate(0.0f, 90.0f, 0.0f);
-        transform.position += new Vector3(-3, 0, 0);
+        transform.position += new Vector3(-5, 0, 0);
     }
     #endregion
 
