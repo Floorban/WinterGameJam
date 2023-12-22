@@ -47,13 +47,13 @@ public class PlayerController : MonoBehaviour
 
         if (isAwake)
         {
-            IncreaseFatigueBar();
+            DecreaseFatigueBar();
             wb.temperature.value = 50f;
             ca.colorFilter.value = new Color(1f, 1f, 1f, 1f);
         }
         else
         {
-            DecreaseFatigueBar();
+            IncreaseFatigueBar();
             wb.temperature.value = -100f;
             ca.colorFilter.value = new Color(0.4f, 0.4f, 0.4f, 0.4f);
         }
