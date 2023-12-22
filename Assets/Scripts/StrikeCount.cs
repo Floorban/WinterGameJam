@@ -5,18 +5,26 @@ public class StrikeCount : MonoBehaviour
 {
     private float _strike = 0;
     [SerializeField] private TextMeshProUGUI _strikeText;
+    [SerializeField] private PlayerController _player;
 
-    public bool _canStrike = true;
+    public bool canStrike = true;
+
+    public GameObject Boss;
+    public GameObject angryBoss;
 
     private void Start()
     {
-        _canStrike = true;
+        canStrike = true;
+        angryBoss.SetActive(false);
     }
     public void AddStrike()
     {
-        if (_canStrike) 
+        angryBoss.SetActive(true);
+        Boss.SetActive(false);
+        if (canStrike) 
         {
-            _canStrike = false;
+            canStrike = false;
+            _player.isAwake = true;
             _strike += 1;
             _strikeText.text = "Strikes: " + _strike;
             Debug.Log(_strike);
