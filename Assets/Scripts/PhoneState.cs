@@ -49,6 +49,7 @@ public class PhoneState : MonoBehaviour
     }
     void OpenTextPanel()
     {
+        animator.SetBool("hasCall", false);
         Debug.Log("choose file");
     }
 }
